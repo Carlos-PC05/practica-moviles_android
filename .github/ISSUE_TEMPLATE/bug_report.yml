@@ -1,0 +1,79 @@
+name: Bug report
+description: Reportar un error o comportamiento inesperado
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportar el problema. Rellena los campos con el mayor detalle posible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Descripción
+      description: Qué ocurre y qué impacto tiene
+      placeholder: Al ejecutar X, el servicio devuelve error 500...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir
+      placeholder: |
+        1. Ir a '...'
+        2. Ejecutar '...'
+        3. Observar el error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamiento esperado
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportamiento actual
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Entorno
+      options:
+        - Producción
+        - Staging
+        - Desarrollo
+        - Local
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Versión / commit / despliegue
+      placeholder: v1.2.3, abc1234, fecha del despliegue...
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs o capturas
+      description: Pega logs relevantes, trazas o enlaces a capturas
+      render: shell
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Comprobaciones
+      options:
+        - label: He buscado issues abiertos o cerrados similares
+          required: true
+        - label: He incluido información suficiente para reproducir el problema
+          required: true
