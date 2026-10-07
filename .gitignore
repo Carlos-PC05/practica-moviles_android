@@ -25,3 +25,22 @@ replay_pid*
 
 # Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
 .kotlin/
+
+# Cachés y archivos generados
+.gradle/
+.kotlin/
+build/
+.cxx/
+.externalNativeBuild/
+
+# Configuración local de Android Studio
+.idea/
+*.iml
+local.properties
+
+# Claves de firma
+*.jks
+*.keystore
+
+# Excepción a la regla existente *.jar
+!gradle/wrapper/gradle-wrapper.jar
