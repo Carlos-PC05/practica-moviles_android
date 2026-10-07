@@ -1,0 +1,64 @@
+name: Feature request
+description: Proponer una mejora o nueva funcionalidad
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe la mejora que propones y el problema que resuelve.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema o necesidad
+      description: Qué limitación o dolor de cabeza existe hoy
+      placeholder: Actualmente no podemos...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solución propuesta
+      description: Cómo crees que debería resolverse
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Otras opciones que hayas evaluado
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad sugerida
+      options:
+        - Baja
+        - Media
+        - Alta
+        - Crítica
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+      description: Condiciones para considerar la feature completada
+      placeholder: |
+        - [ ] El usuario puede...
+        - [ ] Se documenta en...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Comprobaciones
+      options:
+        - label: He comprobado que no existe un issue similar ya abierto
+          required: true
