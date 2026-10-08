@@ -44,3 +44,8 @@ local.properties
 
 # Excepción a la regla existente *.jar
 !gradle/wrapper/gradle-wrapper.jar
+
+# Dev Tools
+AGENTS.md
+docs/agents/
+.codegraph/
