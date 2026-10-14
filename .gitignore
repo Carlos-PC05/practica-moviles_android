@@ -38,6 +38,9 @@ build/
 *.iml
 local.properties
 
+# Configuración de Firebase local
+/app/google-services.json
+
 # Claves de firma
 *.jks
 *.keystore
