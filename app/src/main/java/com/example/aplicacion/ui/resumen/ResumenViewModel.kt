@@ -5,5 +5,5 @@ import com.example.aplicacion.data.MovimientosRepository
 import com.example.aplicacion.domain.calcularResumen
 
 class ResumenViewModel(repository: MovimientosRepository) : ViewModel() {
-    val resumen = calcularResumen(repository.obtenerMovimientos())
+    val resumen = calcularResumen(repository.obtenerMovimientos().value)
 }

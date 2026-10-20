@@ -7,9 +7,9 @@ import org.junit.Test
 
 class ResumenViewModelTest {
     @Test
-    fun muestraElResumenDeLosDatosDeEjemplo() {
+    fun muestraElResumenDeLosMovimientosDelRepositorio() {
         val viewModel = ResumenViewModel(MovimientosRepository())
 
-        assertEquals(Resumen(500_000L, 150_000L, 350_000L), viewModel.resumen)
+        assertEquals(Resumen(50_000L, 200_130_000L, -200_080_000L), viewModel.resumen)
     }
 }

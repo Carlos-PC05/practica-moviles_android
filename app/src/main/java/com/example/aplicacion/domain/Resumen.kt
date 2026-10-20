@@ -21,16 +21,15 @@ fun calcularResumen(movimientos: List<Movimiento>): Resumen {
     var ingresos = 0L
     var gastos = 0L
 
-    for (movimiento in movimientos){
+    for (movimiento in movimientos) {
         if (movimiento.categoria == Categoria.INGRESO) {
             total += movimiento.importeCentimos
             ingresos += movimiento.importeCentimos
-        }
-        else {
+        } else {
             total -= movimiento.importeCentimos
             gastos += movimiento.importeCentimos
         }
     }
 
-    return Resumen(ingresos, gastos, total);
+    return Resumen(ingresos, gastos, total)
 }
