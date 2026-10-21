@@ -3,55 +3,73 @@ description: Proponer una mejora o nueva funcionalidad
 title: "[Feature]: "
 labels:
   - enhancement
+  - needs-triage
 body:
   - type: markdown
     attributes:
       value: |
-        Describe la mejora que propones y el problema que resuelve.
+        Rellena el issue con el mismo formato que los tickets de `docs/agents/tickets/`.
+        El estado de triage se gestiona con etiquetas.
 
-  - type: textarea
-    id: problem
+  - type: input
+    id: spec
     attributes:
-      label: Problema o necesidad
-      description: Qué limitación o dolor de cabeza existe hoy
-      placeholder: Actualmente no podemos...
+      label: Spec
+      description: Ruta o enlace a la spec que cubre esta entrega
+      placeholder: docs/SRS.md
+    validations:
+      required: true
+
+  - type: input
+    id: coverage
+    attributes:
+      label: Cobertura
+      description: Requisitos (RF/RT) que cubre
+      placeholder: RF-07, RF-08; RT-02, RT-06
     validations:
       required: true
 
   - type: textarea
-    id: solution
+    id: what-to-build
     attributes:
-      label: Solución propuesta
-      description: Cómo crees que debería resolverse
+      label: What to build
+      description: Objetivo de la entrega en una frase
+      placeholder: Registrar ingresos y gastos desde Movimientos y ver su efecto en efectivo y resumen del mes.
     validations:
       required: true
 
   - type: textarea
-    id: alternatives
+    id: blocked-by
     attributes:
-      label: Alternativas consideradas
-      description: Otras opciones que hayas evaluado
-
-  - type: dropdown
-    id: priority
-    attributes:
-      label: Prioridad sugerida
-      options:
-        - Baja
-        - Media
-        - Alta
-        - Crítica
+      label: Blocked by
+      description: Issues o tickets que deben completarse antes, uno por línea
+      placeholder: |
+        - #12 Establecer el saldo inicial
+        - Ninguno — puede comenzar inmediatamente.
     validations:
       required: true
 
   - type: textarea
     id: acceptance
     attributes:
-      label: Criterios de aceptación
-      description: Condiciones para considerar la feature completada
+      label: Acceptance criteria
+      description: Condiciones verificables para considerar la entrega completada
       placeholder: |
-        - [ ] El usuario puede...
-        - [ ] Se documenta en...
+        - [ ] Formulario con importe positivo, fecha, categoría y nota opcional.
+        - [ ] Persistencia privada y confirmación remota antes de anunciar éxito.
+    validations:
+      required: true
+
+  - type: textarea
+    id: common-conditions
+    attributes:
+      label: Condiciones comunes
+      description: Condiciones técnicas que hereda toda entrega
+      value: |
+        - Entrega vertical: integrar interfaz, estado/ViewModel, Repository, persistencia o API Android y comprobación del comportamiento que corresponda; no entregar solo una capa.
+        - Aplicar Compose/Material 3, inyección, privacidad por usuario y estados de carga/error/vacío desde la propia entrega. Los formularios sobreviven a errores y el guardado requiere confirmación remota.
+        - Añadir pruebas pequeñas para lógica no trivial y comprobaciones de acceso al añadir datos; documentar una demostración reproducible. No aplazar seguridad o integridad al ticket final.
+        - Mantener adaptación y accesibilidad en las pantallas tocadas. Reutilizar las decisiones existentes sin ampliar el MVP.
     validations:
       required: true
 
