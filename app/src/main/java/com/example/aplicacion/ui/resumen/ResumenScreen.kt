@@ -27,17 +27,20 @@ import java.util.Currency
 import java.util.Locale
 
 /**
- * Muestra los totales financieros y ofrece volver al formulario de movimientos.
+ * Muestra los totales, el listado breve y ofrece volver al formulario o abrir todos los movimientos.
  *
  * @param resumen totales actuales, expresados en céntimos.
  * @param movimientos flujo observable cuya lista se recoge para mostrar cada movimiento.
  * @param onAgregarMovimiento vuelve al formulario para añadir otro movimiento.
+ * @param onVerMovimientos abre la pantalla con el listado completo.
+ * @param modifier ajustes visuales que recibe el contenedor principal.
  */
 @Composable
 fun ResumenScreen(
     resumen: Resumen,
     movimientos: StateFlow<List<Movimiento>>,
     onAgregarMovimiento: () -> Unit,
+    onVerMovimientos: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val formato = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("es-ES")).apply {
@@ -77,6 +80,9 @@ fun ResumenScreen(
         Text("Ingresos menos gastos. No representa el saldo disponible.")
         Button(onClick = onAgregarMovimiento, modifier = Modifier.fillMaxWidth()) {
             Text("Añadir movimiento")
+        }
+        Button(onClick = onVerMovimientos, modifier = Modifier.fillMaxWidth()) {
+            Text("Ver todos los movimientos")
         }
     }
 }

@@ -9,7 +9,11 @@ import com.example.aplicacion.domain.importeEnCentimos
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 
-/** Conecta los movimientos del repositorio con el resumen que muestra la interfaz. */
+/**
+ * Conecta los movimientos del repositorio con el resumen que muestra la interfaz.
+ *
+ * @param repository fuente y destino de los movimientos de la aplicación.
+ */
 class ResumenViewModel(private val repository: MovimientosRepository) : ViewModel() {
     private val movimientos = repository.obtenerMovimientos()
 
@@ -37,6 +41,7 @@ class ResumenViewModel(private val repository: MovimientosRepository) : ViewMode
         return false
     }
 
+    /** Devuelve el flujo observable que contiene los movimientos actuales. */
     fun mostrarMovimientos(): StateFlow<List<Movimiento>> {
         return repository.obtenerMovimientos()
     }

@@ -32,3 +32,11 @@ Tu siguiente paso: elimina la declaración inválida de ResumenScreen y haz que 
 StateFlow<List<Movimiento>> no es una lista y no se puede recorrer directamente.
 
 Tenemos que obtener la lista de movimientos del StateFlow mediante collectAsState().value y ahí iterar la lista
+
+##### Nivel completado: mostrar los movimientos y recoger cambios con collectAsState.
+
+##### Nivel completado: eliminar movimientos desde el listado.
+
+La pantalla envía el movimiento pulsado al ViewModel, que delega la eliminación al repositorio. La lista observable cambia y Compose actualiza el listado y el resumen. Comprobación: añade 25 € en Ocio, elimínalo desde el listado y confirma que quedan cuatro filas y bajan los gastos.
+
+Siguiente paso: mostrar un mensaje cuando se hayan eliminado todos los movimientos. La comprobación y los pasos están en `docs/CONTINUAR-APRENDIZAJE.md`.

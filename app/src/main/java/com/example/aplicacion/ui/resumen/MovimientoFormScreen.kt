@@ -35,6 +35,7 @@ import com.example.aplicacion.domain.Categoria
  *
  * @param onGuardar recibe el texto y la categoría; devuelve `true` si el ViewModel lo acepta.
  * @param onVerResumen cambia a la pantalla con los totales actualizados.
+ * @param modifier ajustes visuales que recibe el contenedor principal.
  */
 @Composable
 fun MovimientoFormScreen(

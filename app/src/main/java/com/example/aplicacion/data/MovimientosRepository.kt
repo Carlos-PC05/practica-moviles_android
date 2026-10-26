@@ -25,8 +25,21 @@ class MovimientosRepository {
         return _movimientos.asStateFlow()
     }
 
-    /** Añade un movimiento y publica una lista nueva a quienes observan el estado. */
+    /**
+     * Añade un movimiento al final y publica la nueva lista a quienes observan el estado.
+     *
+     * @param movimiento movimiento que se añade, con importe positivo en céntimos.
+     */
     fun addMovimiento(movimiento: Movimiento) {
         _movimientos.update { actual -> actual + movimiento }
+    }
+
+    /**
+     * Elimina la primera coincidencia del movimiento y publica la nueva lista observable.
+     *
+     * @param movimiento valor que se busca y elimina de la lista.
+     */
+    fun deleteMovimiento(movimiento: Movimiento) {
+        _movimientos.update { actual -> actual - movimiento }
     }
 }
