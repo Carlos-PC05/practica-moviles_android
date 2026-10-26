@@ -27,3 +27,8 @@ MainActivity: observa el flujo y obtiene la lista actual
 ResumenScreen: recibe la lista como parámetro
 
 Tu siguiente paso: elimina la declaración inválida de ResumenScreen y haz que MainActivity le pase la lista que observa. La pantalla no debería buscar el ViewModel por su nombre.
+
+// Le he pasado a `ResumenScreen` los movimientos que obtenía desde el repositorio el ViewModel por medio de `MainActivity`
+StateFlow<List<Movimiento>> no es una lista y no se puede recorrer directamente.
+
+Tenemos que obtener la lista de movimientos del StateFlow mediante collectAsState().value y ahí iterar la lista
