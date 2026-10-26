@@ -12,12 +12,15 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.example.aplicacion.domain.Movimiento
 import com.example.aplicacion.domain.Resumen
 import com.example.aplicacion.ui.theme.AplicacionTheme
+import kotlinx.coroutines.flow.StateFlow
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.Currency
@@ -27,11 +30,13 @@ import java.util.Locale
  * Muestra los totales financieros y ofrece volver al formulario de movimientos.
  *
  * @param resumen totales actuales, expresados en céntimos.
+ * @param movimientos flujo observable cuya lista se recoge para mostrar cada movimiento.
  * @param onAgregarMovimiento vuelve al formulario para añadir otro movimiento.
  */
 @Composable
 fun ResumenScreen(
     resumen: Resumen,
+    movimientos: StateFlow<List<Movimiento>>,
     onAgregarMovimiento: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -58,6 +63,17 @@ fun ResumenScreen(
             formato.format(BigDecimal.valueOf(resumen.flujoCentimos, 2)),
             style = MaterialTheme.typography.headlineMedium
         )
+        HorizontalDivider()
+        Text("Movimientos", style = MaterialTheme.typography.titleMedium)
+        // StateFlow es el flujo; collectAsState obtiene su lista actual y actualiza Compose al cambiar.
+        val listaMovimientos = movimientos.collectAsState().value
+        // El bucle visita cada Movimiento de la lista y crea un Text para mostrarlo.
+        for (movimiento in listaMovimientos) {
+            Text(
+                "${movimiento.categoria}: " +
+                    formato.format(BigDecimal.valueOf(movimiento.importeCentimos, 2))
+            )
+        }
         Text("Ingresos menos gastos. No representa el saldo disponible.")
         Button(onClick = onAgregarMovimiento, modifier = Modifier.fillMaxWidth()) {
             Text("Añadir movimiento")

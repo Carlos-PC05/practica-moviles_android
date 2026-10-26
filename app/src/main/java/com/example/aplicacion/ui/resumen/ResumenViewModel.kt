@@ -6,6 +6,7 @@ import com.example.aplicacion.domain.Categoria
 import com.example.aplicacion.domain.Movimiento
 import com.example.aplicacion.domain.calcularResumen
 import com.example.aplicacion.domain.importeEnCentimos
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 
 /** Conecta los movimientos del repositorio con el resumen que muestra la interfaz. */
@@ -34,5 +35,9 @@ class ResumenViewModel(private val repository: MovimientosRepository) : ViewMode
         }
 
         return false
+    }
+
+    fun mostrarMovimientos(): StateFlow<List<Movimiento>> {
+        return repository.obtenerMovimientos()
     }
 }

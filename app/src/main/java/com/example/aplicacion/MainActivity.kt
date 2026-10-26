@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
                     if (mostrandoResumen) {
                         ResumenScreen(
                             resumen = resumen,
+                            movimientos = resumenViewModel.mostrarMovimientos(),
                             onAgregarMovimiento = { mostrandoResumen = false },
                             modifier = Modifier.padding(innerPadding)
                         )
