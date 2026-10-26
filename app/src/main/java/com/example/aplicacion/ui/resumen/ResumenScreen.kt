@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,7 +24,11 @@ import java.util.Currency
 import java.util.Locale
 
 @Composable
-fun ResumenScreen(resumen: Resumen, modifier: Modifier = Modifier) {
+fun ResumenScreen(
+    resumen: Resumen,
+    onAgregarMovimiento: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val formato = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("es-ES")).apply {
         currency = Currency.getInstance("EUR")
     }
@@ -36,7 +41,6 @@ fun ResumenScreen(resumen: Resumen, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text("Resumen", style = MaterialTheme.typography.headlineLarge)
-        Text("Datos de ejemplo")
         HorizontalDivider()
         Text("Ingresos", style = MaterialTheme.typography.titleMedium)
         Text(formato.format(BigDecimal.valueOf(resumen.ingresosCentimos, 2)))
@@ -49,5 +53,8 @@ fun ResumenScreen(resumen: Resumen, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineMedium
         )
         Text("Ingresos menos gastos. No representa el saldo disponible.")
+        Button(onClick = onAgregarMovimiento, modifier = Modifier.fillMaxWidth()) {
+            Text("Añadir movimiento")
+        }
     }
 }

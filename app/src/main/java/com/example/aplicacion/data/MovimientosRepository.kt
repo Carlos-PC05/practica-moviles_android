@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class MovimientosRepository {
-    // shortcut: datos de ejemplo locales; sustituir por Firestore al implementar persistencia.
+    // shortcut: los movimientos viven en memoria y se reinician al cerrar la aplicación.
     private val _movimientos = MutableStateFlow<List<Movimiento>>(
         listOf(
         Movimiento(50_000L, Categoria.INGRESO),
