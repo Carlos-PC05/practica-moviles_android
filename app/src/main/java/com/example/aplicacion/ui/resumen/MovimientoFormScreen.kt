@@ -28,6 +28,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.aplicacion.domain.Categoria
 
+/**
+ * Captura un importe y una categoría, informa si el guardado falla y permite abrir el resumen.
+ *
+ * Al guardar con éxito limpia el campo; si el importe no es válido, conserva el texto y muestra un error.
+ *
+ * @param onGuardar recibe el texto y la categoría; devuelve `true` si el ViewModel lo acepta.
+ * @param onVerResumen cambia a la pantalla con los totales actualizados.
+ */
 @Composable
 fun MovimientoFormScreen(
     onGuardar: (String, Categoria) -> Boolean,

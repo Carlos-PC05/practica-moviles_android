@@ -11,6 +11,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
+// Esquemas de respaldo para dispositivos sin color dinámico o cuando está desactivado.
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
@@ -22,7 +23,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40
 
-    /* Other default colors to override
+    /* Ejemplos de otros roles de color que se podrían personalizar.
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
@@ -33,10 +34,17 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/**
+ * Aplica colores y tipografía Material 3 según el tema y la versión de Android.
+ *
+ * @param darkTheme selecciona el esquema oscuro cuando es `true`.
+ * @param dynamicColor usa los colores del fondo de pantalla cuando el sistema los admite.
+ * @param content contenido de la aplicación que recibe este tema.
+ */
 @Composable
 fun AplicacionTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    // Android 12 o posterior puede adaptar la paleta al fondo de pantalla.
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

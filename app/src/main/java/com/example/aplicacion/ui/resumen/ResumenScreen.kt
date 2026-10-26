@@ -23,6 +23,12 @@ import java.text.NumberFormat
 import java.util.Currency
 import java.util.Locale
 
+/**
+ * Muestra los totales financieros y ofrece volver al formulario de movimientos.
+ *
+ * @param resumen totales actuales, expresados en céntimos.
+ * @param onAgregarMovimiento vuelve al formulario para añadir otro movimiento.
+ */
 @Composable
 fun ResumenScreen(
     resumen: Resumen,

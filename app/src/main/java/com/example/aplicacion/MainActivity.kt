@@ -23,6 +23,7 @@ import com.example.aplicacion.ui.resumen.ResumenScreen
 import com.example.aplicacion.ui.resumen.ResumenViewModel
 import com.example.aplicacion.ui.theme.AplicacionTheme
 
+/** Actividad principal: crea el ViewModel y presenta el formulario o el resumen. */
 class MainActivity : ComponentActivity() {
     private val resumenViewModel: ResumenViewModel by viewModels {
         viewModelFactory {
@@ -30,6 +31,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Configura Compose, observa el resumen y gestiona el cambio entre pantallas.
+     *
+     * @param savedInstanceState estado anterior de la actividad, si Android lo conserva.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
