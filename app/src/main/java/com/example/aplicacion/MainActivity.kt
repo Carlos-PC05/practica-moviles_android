@@ -12,12 +12,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.aplicacion.data.MovimientosRepository
+import com.example.aplicacion.domain.Movimiento
 import com.example.aplicacion.ui.movimientos.MovimientosScreen
 import com.example.aplicacion.ui.movimientos.MovimientosViewModel
 import com.example.aplicacion.ui.resumen.MovimientoFormScreen
@@ -62,19 +64,33 @@ class MainActivity : ComponentActivity() {
                         initial = resumenViewModel.resumenInicial
                     ).value
                     var pantalla by rememberSaveable { mutableStateOf(Pantalla.FORMULARIO) }
-                    BackHandler(enabled = pantalla != Pantalla.FORMULARIO) {
-                        pantalla = when (pantalla) {
-                            Pantalla.MOVIMIENTOS -> Pantalla.RESUMEN
-                            Pantalla.RESUMEN -> Pantalla.FORMULARIO
-                            Pantalla.FORMULARIO -> Pantalla.FORMULARIO
+                    var movimientoEnEdicion by remember { mutableStateOf<Movimiento?>(null) }
+                    BackHandler(enabled = pantalla != Pantalla.FORMULARIO || movimientoEnEdicion != null) {
+                        if (pantalla == Pantalla.FORMULARIO && movimientoEnEdicion != null) {
+                            movimientoEnEdicion = null
+                            pantalla = Pantalla.MOVIMIENTOS
+                        } else {
+                            pantalla = when (pantalla) {
+                                Pantalla.MOVIMIENTOS -> Pantalla.RESUMEN
+                                Pantalla.RESUMEN -> Pantalla.FORMULARIO
+                                Pantalla.FORMULARIO -> Pantalla.FORMULARIO
+                            }
                         }
                     }
 
                     when (pantalla) {
                         Pantalla.FORMULARIO -> MovimientoFormScreen(
                             onGuardar = resumenViewModel::agregarMovimiento,
-                            onVerResumen = { pantalla = Pantalla.RESUMEN },
-                            onUpdateMovimiento = movimientosViewModel::updateMovimiento,
+                            onActualizar = movimientosViewModel::updateMovimiento,
+                            movimientoEnEdicion = movimientoEnEdicion,
+                            onVerResumen = {
+                                pantalla = if (movimientoEnEdicion == null) {
+                                    Pantalla.RESUMEN
+                                } else {
+                                    Pantalla.MOVIMIENTOS
+                                }
+                                movimientoEnEdicion = null
+                            },
                             modifier = Modifier.padding(innerPadding)
                         )
                         Pantalla.RESUMEN -> ResumenScreen(
@@ -87,6 +103,10 @@ class MainActivity : ComponentActivity() {
                         Pantalla.MOVIMIENTOS -> MovimientosScreen(
                             movimientos = movimientosViewModel.movimientos,
                             onVolverAlResumen = { pantalla = Pantalla.RESUMEN },
+                            onEditarMovimiento = { movimiento ->
+                                movimientoEnEdicion = movimiento
+                                pantalla = Pantalla.FORMULARIO
+                            },
                             onEliminarMovimiento = movimientosViewModel::deleteMovimiento,
                             modifier = Modifier.padding(innerPadding)
                         )

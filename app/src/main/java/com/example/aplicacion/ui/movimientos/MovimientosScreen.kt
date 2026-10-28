@@ -25,6 +25,7 @@ import java.util.Locale
  *
  * @param movimientos flujo que publica la lista actual y sus cambios.
  * @param onVolverAlResumen acción que solicita regresar a la pantalla de resumen.
+ * @param onEditarMovimiento acción que abre el formulario con el movimiento seleccionado.
  * @param onEliminarMovimiento acción que recibe y elimina el movimiento de una fila.
  * @param modifier ajustes visuales que recibe el contenedor principal.
  */
@@ -32,6 +33,7 @@ import java.util.Locale
 fun MovimientosScreen(
     movimientos: StateFlow<List<Movimiento>>,
     onVolverAlResumen: () -> Unit,
+    onEditarMovimiento: (Movimiento) -> Unit,
     onEliminarMovimiento: (Movimiento) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -64,6 +66,12 @@ fun MovimientosScreen(
                 "${movimiento.categoria}: " +
                     formato.format(BigDecimal.valueOf(movimiento.importeCentimos, 2))
             )
+            Button(
+                onClick = { onEditarMovimiento(movimiento) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Editar movimiento")
+            }
             Button(
                 onClick = { onEliminarMovimiento(movimiento) },
                 modifier = Modifier.fillMaxWidth()

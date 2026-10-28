@@ -2,7 +2,9 @@ package com.example.aplicacion.ui.movimientos
 
 import androidx.lifecycle.ViewModel
 import com.example.aplicacion.data.MovimientosRepository
+import com.example.aplicacion.domain.Categoria
 import com.example.aplicacion.domain.Movimiento
+import com.example.aplicacion.domain.importeEnCentimos
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -19,8 +21,10 @@ class MovimientosViewModel(private val repository: MovimientosRepository) : View
         repository.deleteMovimiento(movimiento)
     }
 
-    /** Delega al repositorio la sustitución de un movimiento por sus nuevos datos. */
-    fun updateMovimiento(original: Movimiento, actualizado: Movimiento) {
-        repository.updateMovimiento(original, actualizado)
+    /** Valida los datos y reemplaza el movimiento original en el repositorio. */
+    fun updateMovimiento(original: Movimiento, importe: String, categoria: Categoria): Boolean {
+        val importeCentimos = importeEnCentimos(importe) ?: return false
+        repository.updateMovimiento(original, Movimiento(importeCentimos, categoria))
+        return true
     }
 }

@@ -28,26 +28,39 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aplicacion.domain.Categoria
+import com.example.aplicacion.domain.Movimiento
+import com.example.aplicacion.ui.theme.AplicacionTheme
+import java.math.BigDecimal
 
 /**
- * Captura un importe y una categoría, informa si el guardado falla y permite abrir el resumen.
+ * Añade un movimiento o edita el seleccionado, e informa cuando el importe no es válido.
  *
- * Al guardar con éxito limpia el campo; si el importe no es válido, conserva el texto y muestra un error.
+ * En modo edición, precarga los datos actuales y vuelve al listado cuando se actualizan correctamente.
  *
  * @param onGuardar recibe el texto y la categoría; devuelve `true` si el ViewModel lo acepta.
- * @param onVerResumen cambia a la pantalla con los totales actualizados.
+ * @param onActualizar recibe el movimiento original y los datos editados; devuelve `false` si el importe no es válido.
+ * @param onVerResumen vuelve al resumen o al listado, según el modo del formulario.
+ * @param movimientoEnEdicion movimiento precargado; `null` representa un alta nueva.
  * @param modifier ajustes visuales que recibe el contenedor principal.
  */
-@Preview
 @Composable
 fun MovimientoFormScreen(
     onGuardar: (String, Categoria) -> Boolean,
+    onActualizar: (Movimiento, String, Categoria) -> Boolean,
     onVerResumen: () -> Unit,
-    updateMovimiento: Boolean,
+    movimientoEnEdicion: Movimiento? = null,
     modifier: Modifier = Modifier
 ) {
-    var importe by rememberSaveable { mutableStateOf("") }
-    var categoria by rememberSaveable { mutableStateOf(Categoria.OTROS) }
+    var importe by rememberSaveable(movimientoEnEdicion) {
+        mutableStateOf(
+            movimientoEnEdicion?.let {
+                BigDecimal.valueOf(it.importeCentimos, 2).stripTrailingZeros().toPlainString()
+            }.orEmpty()
+        )
+    }
+    var categoria by rememberSaveable(movimientoEnEdicion) {
+        mutableStateOf(movimientoEnEdicion?.categoria ?: Categoria.OTROS)
+    }
     var categoriasAbiertas by rememberSaveable { mutableStateOf(false) }
     var mostrarError by rememberSaveable { mutableStateOf(false) }
 
@@ -60,7 +73,10 @@ fun MovimientoFormScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Añadir movimiento", style = MaterialTheme.typography.headlineLarge)
+        Text(
+            if (movimientoEnEdicion == null) "Añadir movimiento" else "Editar movimiento",
+            style = MaterialTheme.typography.headlineLarge
+        )
         OutlinedTextField(
             value = importe,
             onValueChange = {
@@ -105,7 +121,7 @@ fun MovimientoFormScreen(
             }
         }
 
-        if(updateMovimiento){
+        if (movimientoEnEdicion == null) {
             Button(
                 onClick = {
                     mostrarError = !onGuardar(importe, categoria)
@@ -113,22 +129,33 @@ fun MovimientoFormScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Text("Guardar movimiento")
+            }
+        } else {
+            Button(
+                onClick = {
+                    mostrarError = !onActualizar(movimientoEnEdicion, importe, categoria)
+                    if (!mostrarError) onVerResumen()
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Actualizar movimiento")
             }
-            return
-        }
-
-        Button(
-            onClick = {
-                mostrarError = !onGuardar(importe, categoria)
-                if (!mostrarError) importe = ""
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Guardar movimiento")
         }
         TextButton(onClick = onVerResumen, modifier = Modifier.fillMaxWidth()) {
-            Text("Ver resumen")
+            Text(if (movimientoEnEdicion == null) "Ver resumen" else "Volver a movimientos")
         }
+    }
+}
+
+@Preview
+@Composable
+private fun MovimientoFormScreenPreview() {
+    AplicacionTheme {
+        MovimientoFormScreen(
+            onGuardar = { _, _ -> true },
+            onActualizar = { _, _, _ -> true },
+            onVerResumen = {}
+        )
     }
 }
