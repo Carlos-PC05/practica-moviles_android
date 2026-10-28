@@ -46,6 +46,18 @@ fun MovimientosScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
+        // Si no hay movimientos, mostramos "No hay movimientos" y un botón para volver a la página del resumen
+        if(listaMovimientos.isEmpty()) {
+            // <<No hay movimientos>> con estilo de cabecera
+            Text("No hay movimientos", style = MaterialTheme.typography.headlineLarge)
+            // Botón para volver al resumen
+            Button(onClick = onVolverAlResumen, modifier = Modifier.fillMaxWidth()) {
+                Text("Volver al resumen")
+            }
+            return
+        }
+
         Text("Movimientos", style = MaterialTheme.typography.headlineLarge)
         for (movimiento in listaMovimientos) {
             Text(
