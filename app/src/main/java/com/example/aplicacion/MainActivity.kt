@@ -74,6 +74,7 @@ class MainActivity : ComponentActivity() {
                         Pantalla.FORMULARIO -> MovimientoFormScreen(
                             onGuardar = resumenViewModel::agregarMovimiento,
                             onVerResumen = { pantalla = Pantalla.RESUMEN },
+                            onUpdateMovimiento = movimientosViewModel::updateMovimiento,
                             modifier = Modifier.padding(innerPadding)
                         )
                         Pantalla.RESUMEN -> ResumenScreen(

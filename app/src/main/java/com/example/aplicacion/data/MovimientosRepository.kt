@@ -42,4 +42,22 @@ class MovimientosRepository {
     fun deleteMovimiento(movimiento: Movimiento) {
         _movimientos.update { actual -> actual - movimiento }
     }
+
+    /**
+     * Sustituye la primera coincidencia del movimiento original y conserva su posición.
+     * Si no encuentra el original, deja la lista sin cambios.
+     *
+     * @param original movimiento actual que se busca en la lista.
+     * @param actualizado nuevos datos para reemplazar el movimiento original.
+     */
+    fun updateMovimiento(original: Movimiento, actualizado: Movimiento) {
+        _movimientos.update { actual ->
+            val indice = actual.indexOf(original)
+            if (indice == -1) {
+                actual
+            } else {
+                actual.toMutableList().apply { this[indice] = actualizado }
+            }
+        }
+    }
 }

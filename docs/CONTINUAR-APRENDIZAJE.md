@@ -2,16 +2,14 @@
 
 ## Estado actual
 
-El formulario añade movimientos al repositorio en memoria. El resumen y la pantalla de movimientos observan el mismo `StateFlow`.
-Desde el listado se puede eliminar cada movimiento; el resumen se recalcula al cambiar la lista.
+El formulario añade movimientos. El resumen y el listado observan el mismo `StateFlow`; el listado permite eliminarlos y muestra un mensaje cuando queda vacío. El nivel de estado vacío se completó en el commit `5c15db6`.
 
-## Siguiente paso: mostrar el estado vacío
+## Siguiente paso: editar un movimiento
 
-Aprenderás a presentar una interfaz distinta cuando la lista no contiene movimientos.
+Aprenderás a reemplazar un elemento de una lista sin crear un movimiento adicional. El repositorio publicará una lista nueva y el `StateFlow` actualizará el listado y el resumen.
 
-1. En `MovimientosScreen`, muestra «No hay movimientos» cuando la lista esté vacía.
-2. Conserva las filas y sus botones de eliminación cuando haya movimientos.
-3. Mantén disponible el botón para volver al resumen.
+1. Añade una acción «Editar» en cada fila.
+2. Abre el formulario con el importe y la categoría actuales.
+3. Al guardar, actualiza ese movimiento en el repositorio y conserva el flujo de alta actual.
 
-**Comprobación:** elimina los cuatro movimientos iniciales. El listado debe mostrar «No hay movimientos» y ningún botón para eliminar.
-Después, vuelve al formulario, añade 25 € en Ocio y comprueba que el listado muestra una fila y el resumen se actualiza.
+**Comprobación:** añade 25 € en Ocio, edítalo a 30 € en Vivienda y guarda. Debe seguir habiendo cinco filas; Ocio baja 25 €, Vivienda sube 30 € y el resumen refleja el cambio neto de 5 €.

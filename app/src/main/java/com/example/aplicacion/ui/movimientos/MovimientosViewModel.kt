@@ -18,4 +18,9 @@ class MovimientosViewModel(private val repository: MovimientosRepository) : View
     fun deleteMovimiento(movimiento: Movimiento) {
         repository.deleteMovimiento(movimiento)
     }
+
+    /** Delega al repositorio la sustitución de un movimiento por sus nuevos datos. */
+    fun updateMovimiento(original: Movimiento, actualizado: Movimiento) {
+        repository.updateMovimiento(original, actualizado)
+    }
 }

@@ -25,6 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aplicacion.domain.Categoria
 
@@ -37,10 +38,12 @@ import com.example.aplicacion.domain.Categoria
  * @param onVerResumen cambia a la pantalla con los totales actualizados.
  * @param modifier ajustes visuales que recibe el contenedor principal.
  */
+@Preview
 @Composable
 fun MovimientoFormScreen(
     onGuardar: (String, Categoria) -> Boolean,
     onVerResumen: () -> Unit,
+    updateMovimiento: Boolean,
     modifier: Modifier = Modifier
 ) {
     var importe by rememberSaveable { mutableStateOf("") }
@@ -100,6 +103,19 @@ fun MovimientoFormScreen(
                     }
                 }
             }
+        }
+
+        if(updateMovimiento){
+            Button(
+                onClick = {
+                    mostrarError = !onGuardar(importe, categoria)
+                    if (!mostrarError) importe = ""
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Actualizar movimiento")
+            }
+            return
         }
 
         Button(
